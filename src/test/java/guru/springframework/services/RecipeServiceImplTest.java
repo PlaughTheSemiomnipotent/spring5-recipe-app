@@ -1,23 +1,30 @@
 package guru.springframework.services;
 
 
-import guru.springframework.commands.RecipeCommand;
-import guru.springframework.converters.RecipeCommandToRecipe;
-import guru.springframework.converters.RecipeToRecipeCommand;
-import guru.springframework.domain.Recipe;
-import guru.springframework.repositories.RecipeRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.converters.RecipeCommandToRecipe;
+import guru.springframework.converters.RecipeToRecipeCommand;
+import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.NotFoundException;
+import guru.springframework.repositories.RecipeRepository;
 
 /**
  * Created by jt on 6/17/17.
@@ -42,6 +49,17 @@ public class RecipeServiceImplTest {
         recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+    	Optional<Recipe> recipeOptional = Optional.empty();
+    	
+    	when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+    	
+    	Recipe recipeReturned = recipeService.findById(1L);
+    	
+    	// Should go boom
+    }
+    
     @Test
     public void getRecipeByIdTest() throws Exception {
         Recipe recipe = new Recipe();

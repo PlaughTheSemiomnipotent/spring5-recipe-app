@@ -1,8 +1,16 @@
 package guru.springframework.controllers;
 
-import guru.springframework.commands.RecipeCommand;
-import guru.springframework.domain.Recipe;
-import guru.springframework.services.RecipeService;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,12 +19,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.NotFoundException;
+import guru.springframework.services.RecipeService;
 
 /**
  * Created by jt on 6/19/17.
@@ -50,6 +56,23 @@ public class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+    	when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+    	
+    	mockMvc.perform(get("/recipe/1/show"))
+    		.andExpect(status().isNotFound())
+    		.andExpect(view().name("404error"));
+    }
+
+    @Test
+    public void testNumberFormatException() throws Exception {
+
+    	mockMvc.perform(get("/recipe/asdf/show"))
+    		.andExpect(status().isBadRequest())
+    		.andExpect(view().name("400error"));
     }
 
     @Test
