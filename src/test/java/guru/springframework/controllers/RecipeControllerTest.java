@@ -28,6 +28,8 @@ import guru.springframework.services.RecipeService;
  * Created by jt on 6/19/17.
  */
 public class RecipeControllerTest {
+	
+	private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
 
     @Mock
     RecipeService recipeService;
@@ -83,7 +85,7 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("recipe/recipeform"))
+                .andExpect(view().name(RECIPE_RECIPEFORM_URL))
                 .andExpect(model().attributeExists("recipe"));
     }
 
@@ -98,6 +100,7 @@ public class RecipeControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
                 .param("description", "some string")
+                .param("directions", "some directions")
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/show"));
@@ -112,7 +115,7 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/1/update"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("recipe/recipeform"))
+                .andExpect(view().name(RECIPE_RECIPEFORM_URL))
                 .andExpect(model().attributeExists("recipe"));
     }
 
