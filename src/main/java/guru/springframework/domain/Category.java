@@ -1,11 +1,15 @@
 package guru.springframework.domain;
 
+import java.util.Set;
+
+import javax.persistence.Id;
+
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Created by jt on 6/13/17.
@@ -13,15 +17,14 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = {"recipes"})
-@Entity
+@Document
 public class Category {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	private String id;
     private String description;
 
-    @ManyToMany(mappedBy = "categories")
+    @DBRef
     private Set<Recipe> recipes;
 
 }

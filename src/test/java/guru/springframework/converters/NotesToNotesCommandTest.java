@@ -1,18 +1,21 @@
 package guru.springframework.converters;
 
-import guru.springframework.commands.NotesCommand;
-import guru.springframework.domain.Notes;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import guru.springframework.commands.NotesCommand;
+import guru.springframework.domain.Notes;
 
 /**
  * Created by jt on 6/21/17.
  */
 public class NotesToNotesCommandTest {
 
-    public static final Long ID_VALUE = new Long(1L);
+    public static final String ID_VALUE = new String("1");
     public static final String RECIPE_NOTES = "Notes";
     NotesToNotesCommand converter;
 

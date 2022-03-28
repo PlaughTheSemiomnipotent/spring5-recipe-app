@@ -2,6 +2,7 @@ package guru.springframework.services;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import guru.springframework.repositories.RecipeRepository;
 /**
  * Created by jt on 6/21/17.
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecipeServiceIT {

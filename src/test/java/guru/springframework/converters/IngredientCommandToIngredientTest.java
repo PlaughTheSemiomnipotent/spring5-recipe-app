@@ -1,23 +1,26 @@
 package guru.springframework.converters;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.math.BigDecimal;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.math.BigDecimal;
-
-import static org.junit.Assert.*;
 
 public class IngredientCommandToIngredientTest {
 
     public static final Recipe RECIPE = new Recipe();
     public static final BigDecimal AMOUNT = new BigDecimal("1");
     public static final String DESCRIPTION = "Cheeseburger";
-    public static final Long ID_VALUE = new Long(1L);
-    public static final Long UOM_ID = new Long(2L);
+    public static final String ID_VALUE = new String("1");
+    public static final String UOM_ID = new String("2");
 
     IngredientCommandToIngredient converter;
 

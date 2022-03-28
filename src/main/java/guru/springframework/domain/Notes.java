@@ -1,10 +1,12 @@
 package guru.springframework.domain;
 
+import javax.persistence.Id;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 /**
  * Created by jt on 6/13/17.
@@ -12,17 +14,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = {"recipe"})
-@Entity
+@Document
 public class Notes {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne
+	@Id
+    private String id;
     private Recipe recipe;
-
-    @Lob
     private String recipeNotes;
 
 }
